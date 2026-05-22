@@ -7,22 +7,46 @@ import "./App.css";
 import React from "react";
 
 const tasks = [
-  { text: "Revisar Exámenes", completed: false },
+  { text: "Revisar Exámenes", completed: true },
   { text: "Escribir", completed: true },
   { text: "Leer", completed: true },
-  { text: "ver tik tok", completed: false },
+  { text: "ver tik tok", completed: true },
   { text: "cocinar", completed: true },
 ];
 
 function App() {
+  const [completados, setCompletados] = React.useState(tasks);
+  const [searchValue, setSearchValue] = React.useState("");
+  const numberstakscomplete = completados.filter(t => t.completed).length;
+  const total = completados.length;
+
+  const completedTask = (text) => {
+    const newTask = [...completados];
+    const indexTask = newTask.findIndex(task => task.text === text);
+    newTask[indexTask].completed = !newTask[indexTask].completed;
+    setCompletados(newTask);
+  };
+
+  const deleteTask = (text) => {
+    const newTask = [...completados];
+    const indexTask = newTask.findIndex(task => task.text === text);
+    newTask.splice(indexTask, 1);
+    setCompletados(newTask);
+  };
+
+  const searchtodos = completados.filter(task => {
+    return task.text.toLowerCase().includes(searchValue.toLowerCase());
+  });
+
   return (
     <React.Fragment>
-      <Header completados={10} total={15} />
-      <Search />
+      <Header completados={numberstakscomplete} total={total} />
+      <Search searchValue={searchValue} setSearchValue={setSearchValue} />
       <TodoList>
-        {tasks.map(task=><Item key={task.text}
-        text={task.text}
-        completed={task.completed}/>)}
+        {searchtodos.map(task=><Item key={task.text}
+        {...task}
+        onToggle={completedTask}
+        onDelete={deleteTask}/>)}
       </TodoList>
 
       <Button />

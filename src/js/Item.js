@@ -1,15 +1,15 @@
 import '../css/Item.css'
 
-function Item(task) {
+function Item({ text, completed, onToggle, onDelete }) {
   return (
     <li className="TodoItem">
-      <span className={`Icon Icon-check ${task.completed ? "Icon-check--active" : ""}`}>
+      <span className={`Icon Icon-check ${completed && "Icon-check--active"}`} onClick={() => onToggle(text)}>
         V
       </span>
-      <p className={`TodoItem-p ${task.completed ? "TodoItem-p--complete" : ""}`}>
-        {task.text}
+      <p className={`TodoItem-p ${completed && "TodoItem-p--complete"}`}>
+        {text}
       </p>
-      <span className="Icon Icon-delete">X</span>
+      <span className="Icon Icon-delete" onClick={() => onDelete(text)}>X</span>
     </li>
   );
 }
