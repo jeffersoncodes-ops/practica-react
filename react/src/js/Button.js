@@ -1,11 +1,10 @@
 import '../css/Button.css';
 
-function Button(){
+// Botón flotante "+" para agregar nuevas tareas
+function Button({ onClick }){
     return(
         <button className="CreateTodoButton"
-            onClick={()=>{
-                console.log('Hola como vas')
-            }}
+            onClick={onClick}
         >+</button>
     );
 }
